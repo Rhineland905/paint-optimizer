@@ -1,8 +1,18 @@
 # Paint Optimizer
 
-Fast, memory-capped rendering of [MC Paint](https://modrinth.com/datapack/mc-paint) paintings for Minecraft 26.3 (Fabric, client only).
+Fast, memory-capped rendering of [MC Paint](https://modrinth.com/datapack/mc-paint) paintings for Minecraft 26.3, 26.2 and 1.21.11 (Fabric, client only).
 
 MC Paint draws every painting as a text display full of special font glyphs: a single 64×64 painting is thousands of letters, and a gallery is hundreds of thousands. Paint Optimizer reads that text back into the picture once, puts it into a shared texture atlas and draws each painting as one quad.
+
+## Versions
+
+One jar per Minecraft version; take the one that matches your game.
+
+| Minecraft | Java | Download | Source |
+|---|---|---|---|
+| 26.3 | 25 | [v1.0.0](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0) | `main` |
+| 26.2 | 25 | [v1.0.0+26.2](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0%2B26.2) | [`mc/26.2`](https://github.com/Rhineland905/paint-optimizer/tree/mc/26.2) |
+| 1.21.11 | 21 | [v1.0.0+1.21.11](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0%2B1.21.11) | [`mc/1.21.11`](https://github.com/Rhineland905/paint-optimizer/tree/mc/1.21.11) |
 
 ## What it does
 
@@ -40,7 +50,7 @@ Through [Mod Menu](https://modrinth.com/mod/modmenu): *Mods → Paint Optimizer 
 
 ## Requirements
 
-- Minecraft 26.3, Fabric Loader 0.19.5+, Java 25
+- Minecraft 26.3, 26.2 or 1.21.11 (see [Versions](#versions)), Fabric Loader 0.19.5+, Java 25 (Java 21 on 1.21.11)
 - Fabric API (only its resource loader is used, for the translations)
 - Mod Menu, optional, for the settings screen
 - The server needs MC Paint, as usual; the mod itself is client-only.
@@ -67,7 +77,7 @@ The renderer is ported to 26.3 from [MC Paint Fix](https://github.com/krypt0nmm/
 
 ## По-русски
 
-Мод для Minecraft 26.3 (Fabric, только клиент) ускоряет отрисовку картин MC Paint и держит их кеш в заданном лимите памяти.
+Мод для Minecraft 26.3, 26.2 и 1.21.11 (Fabric, только клиент) ускоряет отрисовку картин MC Paint и держит их кеш в заданном лимите памяти. Для каждой версии игры свой jar-файл, все они есть в таблице [Versions](#versions) выше.
 
 - Каждая картина рисуется одним прямоугольником из общего атласа текстур, а не тысячами букв. Все картины одной страницы атласа рисуются за один проход.
 - Для картин не строится текстовая разметка: это и подвисание при загрузке галереи, и лишняя память.
