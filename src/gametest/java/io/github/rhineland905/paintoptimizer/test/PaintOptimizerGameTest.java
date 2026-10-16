@@ -38,7 +38,7 @@ import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 
 /**
- * Paint Optimizer inside a real 26.3 client, with MC Paint's resource pack (PAINTOPT_MCPAINT_RP):
+ * Paint Optimizer inside a real 26.2 client, with MC Paint's resource pack (PAINTOPT_MCPAINT_RP):
  * paintings must look exactly like vanilla's, the cache must never pass its limit, the paintings seen
  * longest ago must be the ones evicted, and the settings must open from Mod Menu.
  * Screenshots go to build/run/clientGameTest/screenshots.
