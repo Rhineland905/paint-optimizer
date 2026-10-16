@@ -1,0 +1,13 @@
+{
+	"schemaVersion": 1,
+	"id": "paintoptimizer-test",
+	"version": "1.0.0",
+	"name": "Paint Optimizer tests",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": ["io.github.rhineland905.paintoptimizer.test.PaintOptimizerGameTest"]
+	},
+	"depends": {
+		"paintoptimizer": "*"
+	}
+}

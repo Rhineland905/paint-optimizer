@@ -1,0 +1,13 @@
+{
+	"modmenu.descriptionTranslation.paintoptimizer": "Draws MC Paint paintings as one cached texture instead of thousands of letters, and never lets that cache grow past the memory limit you set.",
+	"paintoptimizer.options.title": "Paint Optimizer",
+	"paintoptimizer.options.enabled": "Fast Paintings",
+	"paintoptimizer.options.enabled.tooltip": "Draws each MC Paint painting as one cached texture instead of thousands of letters. Off: the vanilla way, and the cache is freed.",
+	"paintoptimizer.options.cache_size": "Painting Cache",
+	"paintoptimizer.options.cache_size.tooltip": "The most memory cached paintings may take. When it is full, the paintings you saw longest ago are removed first; they come back when you look at them again.",
+	"paintoptimizer.options.megabytes": "%s MB",
+	"paintoptimizer.options.clear": "Clear Cache",
+	"paintoptimizer.options.status": "Cache: %s of %s MB · %s paintings",
+	"paintoptimizer.options.status.off": "Off: paintings are drawn the vanilla way",
+	"paintoptimizer.options.status.mismatch": "Paused: this resource pack sizes paintings differently"
+}

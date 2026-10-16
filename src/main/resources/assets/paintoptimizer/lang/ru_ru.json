@@ -1,0 +1,13 @@
+{
+	"modmenu.descriptionTranslation.paintoptimizer": "Рисует картины MC Paint одной кешированной текстурой вместо тысяч букв и не даёт кешу вырасти больше заданного лимита памяти.",
+	"paintoptimizer.options.title": "Paint Optimizer",
+	"paintoptimizer.options.enabled": "Быстрые картины",
+	"paintoptimizer.options.enabled.tooltip": "Рисует каждую картину MC Paint одной кешированной текстурой вместо тысяч букв. Выкл.: как в ванилле, кеш освобождается.",
+	"paintoptimizer.options.cache_size": "Кеш картин",
+	"paintoptimizer.options.cache_size.tooltip": "Сколько памяти могут занять кешированные картины. Когда кеш заполнен, первыми удаляются картины, которые вы видели давнее всего; они вернутся, когда вы снова на них посмотрите.",
+	"paintoptimizer.options.megabytes": "%s МБ",
+	"paintoptimizer.options.clear": "Очистить кеш",
+	"paintoptimizer.options.status": "Кеш: %s из %s МБ · картин: %s",
+	"paintoptimizer.options.status.off": "Выключено: картины рисуются как в ванилле",
+	"paintoptimizer.options.status.mismatch": "На паузе: этот ресурспак задаёт другой размер картин"
+}

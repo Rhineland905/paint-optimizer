@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "paintoptimizer",
+	"version": "${version}",
+	"name": "Paint Optimizer",
+	"description": "Draws MC Paint paintings as one cached texture instead of thousands of letters, and never lets that cache grow past the memory limit you set.",
+	"authors": [
+		"Rhineland905"
+	],
+	"contributors": [
+		"Krypton Dev (MC Paint Fix, the renderer this is built on)"
+	],
+	"contact": {
+		"sources": "https://github.com/Rhineland905/paint-optimizer",
+		"issues": "https://github.com/Rhineland905/paint-optimizer/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/paintoptimizer/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"modmenu": [
+			"io.github.rhineland905.paintoptimizer.config.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "paintoptimizer.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-resource-loader-v1": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}
