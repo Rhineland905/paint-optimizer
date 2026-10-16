@@ -1,6 +1,6 @@
 # Paint Optimizer
 
-Fast, memory-capped rendering of [MC Paint](https://modrinth.com/datapack/mc-paint) paintings for Minecraft 26.3 (Fabric, client only).
+Fast, memory-capped rendering of [MC Paint](https://modrinth.com/datapack/mc-paint) paintings for Minecraft 1.21.11 (Fabric, client only). This is the 1.21.11 port; `main` is for 26.3 and `mc/26.2` for 26.2.
 
 MC Paint draws every painting as a text display full of special font glyphs: a single 64×64 painting is thousands of letters, and a gallery is hundreds of thousands. Paint Optimizer reads that text back into the picture once, puts it into a shared texture atlas and draws each painting as one quad.
 
@@ -20,10 +20,10 @@ Measured by the in-game test: a wall of 100 different 64×64 paintings, each wit
 
 | | Frame time |
 |---|---|
-| Vanilla 26.3 | 49–78 ms |
-| Paint Optimizer | 2–3 ms |
+| Vanilla 1.21.11 | 49 ms |
+| Paint Optimizer | 2.6 ms |
 
-The noise is what hurts vanilla: every lone pixel is its own glyph, and 26.3 gets slower with each glyph texture it has to sort. With paintings that are noisy all the way through, like real photos, the same wall takes vanilla several seconds per frame.
+The noise is what hurts vanilla: every lone pixel is its own glyph, and the game gets slower with each glyph texture it has to sort. With paintings that are noisy all the way through, like real photos, the same wall takes vanilla several seconds per frame.
 
 Pictures are the same as vanilla's: comparing screenshots, 0.01% of pixels differ.
 
@@ -40,7 +40,7 @@ Through [Mod Menu](https://modrinth.com/mod/modmenu): *Mods → Paint Optimizer 
 
 ## Requirements
 
-- Minecraft 26.3, Fabric Loader 0.19.5+, Java 25
+- Minecraft 1.21.11, Fabric Loader 0.19.5+, Java 21
 - Fabric API (only its resource loader is used, for the translations)
 - Mod Menu, optional, for the settings screen
 - The server needs MC Paint, as usual; the mod itself is client-only.
@@ -67,12 +67,12 @@ The renderer is ported to 26.3 from [MC Paint Fix](https://github.com/krypt0nmm/
 
 ## По-русски
 
-Мод для Minecraft 26.3 (Fabric, только клиент) ускоряет отрисовку картин MC Paint и держит их кеш в заданном лимите памяти.
+Мод для Minecraft 1.21.11 (Fabric, только клиент) ускоряет отрисовку картин MC Paint и держит их кеш в заданном лимите памяти.
 
 - Каждая картина рисуется одним прямоугольником из общего атласа текстур, а не тысячами букв. Все картины одной страницы атласа рисуются за один проход.
 - Для картин не строится текстовая разметка: это и подвисание при загрузке галереи, и лишняя память.
 - Одинаковые картины хранятся один раз.
 - **Жёсткий лимит памяти**: по умолчанию 64 МБ, можно от 16 до 1024 МБ. Когда кеш заполнен, первыми удаляются картины, которые вы видели давнее всего. Картины, которые сейчас рисуются, не удаляются никогда: если все они не помещаются, лишние рисуются как в ванилле. Майнкрафт рисует все картины MC Paint в зоне прорисовки сущностей, поэтому «давно не виденные» — это картины, от которых вы ушли.
-- В тесте со стеной из 100 разных картин кадр занимает 2–3 мс вместо 49–78 мс в ванилле. На «шумных» картинах (как фото) ванилла тратит на такую стену секунды на кадр.
+- В тесте со стеной из 100 разных картин кадр занимает 2,6 мс вместо 49 мс в ванилле. На «шумных» картинах (как фото) ванилла тратит на такую стену секунды на кадр.
 - Пиксели не дублируются в памяти Java: лимит — это вся память, которую занимает кеш.
 - Настройки открываются через Mod Menu и выглядят как обычный экран настроек. Их две: «Быстрые картины» и «Кеш картин» (МБ). Ещё есть кнопка «Очистить кеш».

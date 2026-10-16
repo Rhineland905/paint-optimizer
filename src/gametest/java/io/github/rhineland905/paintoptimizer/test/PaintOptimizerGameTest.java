@@ -38,7 +38,7 @@ import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 
 /**
- * Paint Optimizer inside a real 26.3 client, with MC Paint's resource pack (PAINTOPT_MCPAINT_RP):
+ * Paint Optimizer inside a real 1.21.11 client, with MC Paint's resource pack (PAINTOPT_MCPAINT_RP):
  * paintings must look exactly like vanilla's, the cache must never pass its limit, the paintings seen
  * longest ago must be the ones evicted, and the settings must open from Mod Menu.
  * Screenshots go to build/run/clientGameTest/screenshots.
@@ -62,7 +62,7 @@ public class PaintOptimizerGameTest implements FabricClientGameTest {
 		});
 
 		try (TestSingleplayerContext sp = context.worldBuilder().create()) {
-			sp.getConnection().waitForChunksRender();
+			sp.getClientWorld().waitForChunksRender();
 			TestServerContext server = sp.getServer();
 			server.runCommand("tp @p 0.5 -60 0.5 0 -15");
 
@@ -157,7 +157,7 @@ public class PaintOptimizerGameTest implements FabricClientGameTest {
 			try {
 				// Through Mod Menu's interfaces, as Mod Menu itself calls them: the factory is a lambda class.
 				Object factory = Class.forName("com.terraformersmc.modmenu.api.ModMenuApi").getMethod("getModConfigScreenFactory").invoke(entry);
-				return (Screen) Class.forName("com.terraformersmc.modmenu.api.ConfigScreenFactory").getMethod("create", Screen.class).invoke(factory, client.gui.screen());
+				return (Screen) Class.forName("com.terraformersmc.modmenu.api.ConfigScreenFactory").getMethod("create", Screen.class).invoke(factory, client.screen);
 			} catch (ReflectiveOperationException e) {
 				throw new AssertionError(e);
 			}
@@ -313,7 +313,7 @@ public class PaintOptimizerGameTest implements FabricClientGameTest {
 			repository.setSelected(selected);
 			return client.reloadResourcePacks();
 		});
-		context.waitFor(client -> reload.isDone() && client.gui.overlay() == null, 1200);
+		context.waitFor(client -> reload.isDone() && client.getOverlay() == null, 1200);
 	}
 
 	private static void check(boolean condition, String message) {

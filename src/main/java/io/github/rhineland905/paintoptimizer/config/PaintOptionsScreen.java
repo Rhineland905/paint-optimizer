@@ -6,7 +6,7 @@ import io.github.rhineland905.paintoptimizer.render.PaintGeometry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
@@ -56,10 +56,10 @@ public class PaintOptionsScreen extends OptionsSubScreen {
 	}
 
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-		super.extractRenderState(graphics, mouseX, mouseY, a);
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float a) {
+		super.render(graphics, mouseX, mouseY, a);
 		int y = this.height - this.layout.getFooterHeight() - this.font.lineHeight - HeaderAndFooterLayout.MAGIC_PADDING;
-		graphics.centeredText(this.font, status(), this.width / 2, y, STATUS_COLOUR);
+		graphics.drawCenteredString(this.font, status(), this.width / 2, y, STATUS_COLOUR);
 	}
 
 	@Override

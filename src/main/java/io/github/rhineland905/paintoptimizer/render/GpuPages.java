@@ -1,10 +1,11 @@
 package io.github.rhineland905.paintoptimizer.render;
 
+import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.systems.GpuDevice;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.renderpearl.api.GpuFormat;
-import com.mojang.renderpearl.api.device.GpuDevice;
-import com.mojang.renderpearl.api.textures.FilterMode;
-import com.mojang.renderpearl.api.textures.GpuTexture;
+import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.TextureFormat;
 import io.github.rhineland905.paintoptimizer.PaintOptimizer;
 import java.nio.ByteBuffer;
 import net.minecraft.client.Minecraft;
@@ -53,7 +54,7 @@ final class GpuPages implements PaintAtlas.Backend {
 
 		buffer.flip();
 		GpuTexture texture = handle(page).texture.getTexture();
-		RenderSystem.getDevice().createCommandEncoder().writeToTexture(texture, buffer, 0, 0, x, y, canvas.width(), canvas.height());
+		RenderSystem.getDevice().createCommandEncoder().writeToTexture(texture, buffer, NativeImage.Format.RGBA, 0, 0, x, y, canvas.width(), canvas.height());
 	}
 
 	@Override
@@ -79,7 +80,7 @@ final class GpuPages implements PaintAtlas.Backend {
 		PageTexture(Identifier id) {
 			GpuDevice device = RenderSystem.getDevice();
 			this.texture = device.createTexture(() -> "Paint Optimizer " + id.getPath(), GpuTexture.USAGE_COPY_DST | GpuTexture.USAGE_TEXTURE_BINDING,
-				GpuFormat.RGBA8_UNORM, PaintAtlas.PAGE_SIZE, PaintAtlas.PAGE_SIZE, 1, 1);
+				TextureFormat.RGBA8, PaintAtlas.PAGE_SIZE, PaintAtlas.PAGE_SIZE, 1, 1);
 			this.textureView = device.createTextureView(this.texture);
 			// Nearest, like the font atlas: a stretched canvas keeps the blocky pixels of the glyphs it replaces.
 			this.sampler = RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST);

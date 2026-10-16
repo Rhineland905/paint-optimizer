@@ -2,9 +2,9 @@ package io.github.rhineland905.paintoptimizer.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.TextDisplayEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.world.entity.Display;
 import org.joml.Matrix4f;
 
@@ -37,7 +37,7 @@ public final class PaintRenderer {
 		int background;
 
 		if (defaultBackground) {
-			float opacity = Minecraft.getInstance().gameRenderer.gameRenderState().optionsRenderState.getBackgroundOpacity(0.25F);
+			float opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
 			background = (int)(opacity * 255.0F) << 24;
 		} else {
 			background = text.backgroundColor().get(partialTick);
@@ -53,9 +53,14 @@ public final class PaintRenderer {
 		matrix.translate(1.0F - width / 2.0F, -bottom, 0.0F);
 
 		if (background != 0) {
-			// Same call vanilla makes for display text, so the backdrop matches it exactly.
-			collector.submitTextBackground(poseStack, -1.0F, -1.0F, width, bottom, background,
-				seeThrough ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.POLYGON_OFFSET, light);
+			// The rectangle the font would have drawn behind the text, with the font's own render type.
+			int backgroundColor = background;
+			collector.submitCustomGeometry(poseStack, seeThrough ? RenderTypes.textBackgroundSeeThrough() : RenderTypes.textBackground(), (pose, vertices) -> {
+				vertices.addVertex(pose, -1.0F, -1.0F, 0.0F).setColor(backgroundColor).setLight(light);
+				vertices.addVertex(pose, -1.0F, bottom, 0.0F).setColor(backgroundColor).setLight(light);
+				vertices.addVertex(pose, width, bottom, 0.0F).setColor(backgroundColor).setLight(light);
+				vertices.addVertex(pose, width, -1.0F, 0.0F).setColor(backgroundColor).setLight(light);
+			});
 		}
 
 		// The glyphs carried their shading in the atlas and their colour in the vertex; our texture
