@@ -4,7 +4,7 @@ import io.github.rhineland905.paintoptimizer.PaintOptimizer;
 import net.minecraft.world.entity.Display;
 
 /**
- * Checks, once per session, that our idea of a canvas's size matches the one vanilla measured.
+ * Checks, once per server and set of fonts, that our idea of a canvas's size matches the one vanilla measured.
  *
  * <p>The claim that one MC Paint pixel is exactly ten font units rests on the advances declared in
  * the resource pack. That is true of every version shipped so far, but it is a pack MC Paint can
@@ -26,7 +26,7 @@ public final class PaintGeometry {
 		return state == State.TRUSTED;
 	}
 
-	/** False if the optimisation has been switched off for this session by a failed check. */
+	/** False if the optimisation has been switched off by a failed check, until the fonts or the server change. */
 	public static boolean isUsable() {
 		return state != State.MISMATCHED;
 	}
@@ -63,7 +63,7 @@ public final class PaintGeometry {
 		state = State.MISMATCHED;
 		PaintOptimizer.LOGGER.warn(
 				"MC Paint canvas geometry does not match this resource pack: vanilla lays out {}x{} font units, "
-						+ "we decoded {}x{} pixels ({}x{} units). Falling back to vanilla rendering for this session.",
+						+ "we decoded {}x{} pixels ({}x{} units). Falling back to vanilla rendering until the fonts or the server change.",
 				layout.width(), layout.lines().size(),
 				paint.width(), paint.height(),
 				paint.textWidth(), paint.height() * PaintCanvas.PIXEL_SIZE
@@ -73,7 +73,7 @@ public final class PaintGeometry {
 		return false;
 	}
 
-	/** Lets a resource reload or a manual reload give a changed pack another chance. */
+	/** Lets new fonts, or a new server, give the check another chance. */
 	public static void reset() {
 		state = State.UNCHECKED;
 	}
