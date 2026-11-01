@@ -3,9 +3,11 @@ package io.github.rhineland905.paintoptimizer.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.rhineland905.paintoptimizer.render.ClientHooks;
 import io.github.rhineland905.paintoptimizer.render.PaintBinding;
 import io.github.rhineland905.paintoptimizer.render.PaintBindings;
 import io.github.rhineland905.paintoptimizer.render.PaintGeometry;
+import io.github.rhineland905.paintoptimizer.render.PaintHolder;
 import io.github.rhineland905.paintoptimizer.render.PaintRenderer;
 import io.github.rhineland905.paintoptimizer.render.PaintStateHolder;
 import java.util.List;
@@ -49,6 +51,8 @@ public abstract class TextDisplayRendererMixin {
 	private Display.TextDisplay.CachedInfo paintoptimizer$skipLayoutForPaintings(
 			Display.TextDisplay display, Display.TextDisplay.LineSplitter splitter, Operation<Display.TextDisplay.CachedInfo> original
 	) {
+		((PaintHolder)display).paintoptimizer$dropStaleLayout(ClientHooks.fontGeneration());
+
 		if (PaintGeometry.isTrusted() && PaintBindings.resolve(display).replacesRendering()) {
 			return PAINTOPTIMIZER$NO_LAYOUT;
 		}
