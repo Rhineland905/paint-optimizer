@@ -24,6 +24,9 @@ public abstract class TextDisplayMixin implements PaintHolder {
 	@Unique
 	private PaintVolatility paintoptimizer$volatility;
 
+	@Unique
+	private int paintoptimizer$fontGeneration;
+
 	@Override
 	public PaintBinding paintoptimizer$binding() {
 		return this.paintoptimizer$binding;
@@ -61,5 +64,13 @@ public abstract class TextDisplayMixin implements PaintHolder {
 	@Override
 	public void paintoptimizer$releaseLayout() {
 		this.clientDisplayCache = null;
+	}
+
+	@Override
+	public void paintoptimizer$dropStaleLayout(int fontGeneration) {
+		if (this.paintoptimizer$fontGeneration != fontGeneration) {
+			this.paintoptimizer$fontGeneration = fontGeneration;
+			this.clientDisplayCache = null;
+		}
 	}
 }

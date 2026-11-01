@@ -8,6 +8,7 @@ import io.github.rhineland905.paintoptimizer.render.PaintAtlas;
 import io.github.rhineland905.paintoptimizer.render.PaintBinding;
 import io.github.rhineland905.paintoptimizer.render.PaintCache;
 import io.github.rhineland905.paintoptimizer.render.PaintFont;
+import io.github.rhineland905.paintoptimizer.render.PaintGeometry;
 import io.github.rhineland905.paintoptimizer.render.PaintHolder;
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
@@ -85,6 +86,32 @@ public class PaintOptimizerGameTest implements FabricClientGameTest {
 			check(differs < 0.002, "paintings look different from vanilla");
 
 			context.runOnClient(client -> ClientHooks.setEnabled(true));
+			awaitReady(context, HOME, WALL);
+
+			// 1b. A rejoin to a server whose resource pack has MC Paint's fonts: leaving drops the pack, the
+			// cache and the geometry check, and the world is on screen before the pack is back, so vanilla
+			// lays the new entities out in the default font. Once the pack is back those layouts are
+			// stale, and the paintings must still come back exactly as before.
+			selectPack(context, false);
+			context.runOnClient(client -> {
+				PaintCache.clear();
+				PaintGeometry.reset();
+				// The entities of a rejoined world are new ones, with no layout cached yet.
+				for (Entity entity : client.level.entitiesForRendering()) {
+					if (entity instanceof PaintHolder holder) {
+						holder.paintoptimizer$releaseLayout();
+					}
+				}
+			});
+			context.waitTicks(40);
+			selectPack(context, true);
+			context.waitTicks(40);
+			Path packBack = screenshot(context, server, "po-pack-back");
+			double packBackDiffers = difference(fast, packBack);
+			log(String.format(Locale.ROOT, "resource pack removed and re-added: %.3f%% of pixels differ, geometry %s",
+				packBackDiffers * 100, context.computeOnClient(client -> PaintGeometry.isTrusted()) ? "trusted" : "not trusted"));
+			check(packBackDiffers < 0.002, "paintings are drawn wrong after the resource pack came back");
+			check(context.computeOnClient(client -> PaintGeometry.isTrusted()), "the geometry check did not recover after the pack came back");
 			awaitReady(context, HOME, WALL);
 
 			// 2. A 1 MB limit with all 100 on screen: one page, the rest drawn the vanilla way, nothing evicted back and forth.
@@ -305,11 +332,18 @@ public class PaintOptimizerGameTest implements FabricClientGameTest {
 			throw new AssertionError(e);
 		}
 
+		selectPack(context, true);
+	}
+
+	private static void selectPack(ClientGameTestContext context, boolean on) {
 		CompletableFuture<Void> reload = context.computeOnClient(client -> {
 			PackRepository repository = client.getResourcePackRepository();
 			repository.reload();
 			List<String> selected = new ArrayList<>(repository.getSelectedIds());
-			selected.add("file/mcpaint_rp.zip");
+			selected.remove("file/mcpaint_rp.zip");
+			if (on) {
+				selected.add("file/mcpaint_rp.zip");
+			}
 			repository.setSelected(selected);
 			return client.reloadResourcePacks();
 		});

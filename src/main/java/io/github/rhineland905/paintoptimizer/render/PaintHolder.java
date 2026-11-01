@@ -28,4 +28,11 @@ public interface PaintHolder {
 	 * vanilla re-split the whole component.
 	 */
 	void paintoptimizer$releaseLayout();
+
+	/**
+	 * Drops vanilla's cached line layout if it was measured in fonts that have since been replaced.
+	 *
+	 * @param fontGeneration {@link ClientHooks#fontGeneration()}
+	 */
+	void paintoptimizer$dropStaleLayout(int fontGeneration);
 }

@@ -4,6 +4,7 @@
 	"package": "io.github.rhineland905.paintoptimizer.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"FontManagerMixin",
 		"MinecraftMixin",
 		"TextDisplayEntityRenderStateMixin",
 		"TextDisplayMixin",

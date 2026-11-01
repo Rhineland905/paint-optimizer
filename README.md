@@ -10,9 +10,11 @@ One jar per Minecraft version; take the one that matches your game.
 
 | Minecraft | Java | Download | Source |
 |---|---|---|---|
-| 26.3 | 25 | [v1.0.0](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0) | `main` |
-| 26.2 | 25 | [v1.0.0+26.2](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0%2B26.2) | [`mc/26.2`](https://github.com/Rhineland905/paint-optimizer/tree/mc/26.2) |
-| 1.21.11 | 21 | [v1.0.0+1.21.11](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.0%2B1.21.11) | [`mc/1.21.11`](https://github.com/Rhineland905/paint-optimizer/tree/mc/1.21.11) |
+| 26.3 | 25 | [v1.0.1](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.1) | `main` |
+| 26.2 | 25 | [v1.0.1+26.2](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.1%2B26.2) | [`mc/26.2`](https://github.com/Rhineland905/paint-optimizer/tree/mc/26.2) |
+| 1.21.11 | 21 | [v1.0.1+1.21.11](https://github.com/Rhineland905/paint-optimizer/releases/tag/v1.0.1%2B1.21.11) | [`mc/1.21.11`](https://github.com/Rhineland905/paint-optimizer/tree/mc/1.21.11) |
+
+**1.0.1:** fixed paintings coming out with their rows shifted sideways after joining a server with MC Paint's resource pack, until the next rejoin.
 
 ## What it does
 
@@ -78,6 +80,8 @@ The renderer is ported to 26.3 from [MC Paint Fix](https://github.com/krypt0nmm/
 ## По-русски
 
 Мод для Minecraft 26.3, 26.2 и 1.21.11 (Fabric, только клиент) ускоряет отрисовку картин MC Paint и держит их кеш в заданном лимите памяти. Для каждой версии игры свой jar-файл, все они есть в таблице [Versions](#versions) выше.
+
+**1.0.1:** исправлено: после захода на сервер с пакетом MC Paint строки картин могли съехать вбок до следующего перезахода.
 
 - Каждая картина рисуется одним прямоугольником из общего атласа текстур, а не тысячами букв. Все картины одной страницы атласа рисуются за один проход.
 - Для картин не строится текстовая разметка: это и подвисание при загрузке галереи, и лишняя память.

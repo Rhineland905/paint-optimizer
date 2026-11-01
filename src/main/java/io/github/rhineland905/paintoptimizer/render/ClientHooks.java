@@ -15,6 +15,7 @@ import org.jspecify.annotations.Nullable;
  */
 public final class ClientHooks {
 	private static @Nullable ClientPacketListener connection;
+	private static int fontGeneration;
 
 	private ClientHooks() {
 	}
@@ -32,9 +33,25 @@ public final class ClientHooks {
 		}
 	}
 
-	/** A resource pack swap can change the advances the geometry check was verified against. */
-	public static void onResourceReload() {
+	/** Which fonts a text layout was measured in; see {@link #onFontsChanged()}. */
+	public static int fontGeneration() {
+		return fontGeneration;
+	}
+
+	/**
+	 * The fonts changed: a resource pack was applied, or a font option was switched.
+	 *
+	 * <p>Vanilla keeps a text display's layout until its text changes, so a layout measured in the old
+	 * fonts outlives them. Joining a server with MC Paint's pack does exactly that: the world is on
+	 * screen for a moment before the pack is applied, the paintings are laid out in the default font,
+	 * and once the pack arrives vanilla keeps drawing its rows at the old widths, shifted sideways.
+	 * So every layout and every decision made in the old fonts is retired here, and the geometry
+	 * check is earned again in the new ones.
+	 */
+	public static void onFontsChanged() {
+		fontGeneration++;
 		PaintGeometry.reset();
+		PaintCache.invalidateBindings();
 	}
 
 	/** Applies the on/off switch. Off frees every painting, so the mod holds no memory at all. */
